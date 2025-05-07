@@ -27,25 +27,27 @@ public class PlayerWalkState : PlayerBaseState
 
     public override void PhysicsUpdate()
     {
-        Vector3 currentVelocity = _stateMachine.Rigidbody.velocity;
+        var transform = _stateMachine.Player.transform;
+        Vector2 input = _stateMachine.MovementInput;
+        float moveSpeed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier;
 
-        Vector3 moveDir = new Vector3(_stateMachine.MovementInput.x, 0f, _stateMachine.MovementInput.y).normalized;
-        float speed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier;
-
-        currentVelocity.x = moveDir.x * speed;
-        currentVelocity.z = moveDir.z * speed;
-        // y는 그대로 둠 (중력 적용)
-
-        _stateMachine.Rigidbody.velocity = currentVelocity;
-
-        if (moveDir.sqrMagnitude > 0.01f)
+        //  회전 (A/D)
+        if (Mathf.Abs(input.x) > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
-            _stateMachine.Player.transform.rotation = Quaternion.Slerp(
-                _stateMachine.Player.transform.rotation,
-                targetRotation,
-                Time.fixedDeltaTime * 10f // 회전 속도 조절
-            );
+            float turnSpeed = 180f; // deg/sec
+            float rotationAmount = input.x * turnSpeed * Time.fixedDeltaTime;
+            transform.Rotate(0f, rotationAmount, 0f);
         }
+
+        // 이동 (W/S)
+        Vector3 forward = transform.forward;
+        Vector3 move = forward * input.y * moveSpeed;
+
+        Vector3 velocity = _stateMachine.Rigidbody.velocity;
+        velocity.x = move.x;
+        velocity.z = move.z;
+
+        _stateMachine.Rigidbody.velocity = velocity;
     }
+
 }

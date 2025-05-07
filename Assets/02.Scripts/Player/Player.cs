@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _stateMachine.PhysicsUpdate();
+        Debug.Log("Gravity at runtime: " + Physics.gravity);
     }
 
 }

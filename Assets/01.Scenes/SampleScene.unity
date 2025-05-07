@@ -210,8 +210,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25352272, y: 0.017855214, z: -0.0046804394, w: 0.9671533}
-  m_LocalPosition: {x: -0.11093806, y: 3.5405817, z: -3.0035431}
+  m_LocalRotation: {x: 0.25352272, y: 0.017855132, z: -0.0046804175, w: 0.9671533}
+  m_LocalPosition: {x: -0.11093806, y: 4.6535816, z: -3.0035431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -438,7 +438,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ffe2d446cbab45a429bdaef779ded7d2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.113
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffe2d446cbab45a429bdaef779ded7d2,
         type: 3}
@@ -494,6 +494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WarningMessage
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ffe2d446cbab45a429bdaef779ded7d2,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -618,8 +623,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21559733
-  m_Height: 2.1598964
+  m_Radius: 0.2
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &400024547
@@ -753,7 +758,7 @@ Transform:
   m_GameObject: {fileID: 400024547}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11093806, y: 3.5405817, z: -3.0035431}
+  m_LocalPosition: {x: -0.11093806, y: 4.6535816, z: -3.0035431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1291,7 +1296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859242863}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21339557, y: 0.018033065, z: -0.0039396086, w: 0.9767915}
+  m_LocalRotation: {x: 0.21339557, y: 0.018033097, z: -0.003939616, w: 0.9767915}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1311,7 +1316,7 @@ GameObject:
   - component: {fileID: 1880291613}
   - component: {fileID: 1880291612}
   - component: {fileID: 1880291611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1475,7 +1480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975668168}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2937709, y: 0.017643679, z: -0.0054234727, w: 0.95569766}
+  m_LocalRotation: {x: 0.2937709, y: 0.017643698, z: -0.0054234774, w: 0.95569766}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1554,7 +1559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069389790}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2535227, y: 0.0178552, z: -0.0046804356, w: 0.9671533}
+  m_LocalRotation: {x: 0.2535227, y: 0.017855149, z: -0.0046804217, w: 0.9671533}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
