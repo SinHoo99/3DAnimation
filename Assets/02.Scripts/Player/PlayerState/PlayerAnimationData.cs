@@ -11,6 +11,9 @@ public class PlayerAnimationData
 
     public int DashParameterHash { get; private set; }
 
+    public int IsGroundedParameterHash { get; private set; }
+    public int YVelocityParameterHash { get; private set; }
+
     public void Initialize()
     {
         IdleParameterHash = Animator.StringToHash(ParameterHash.Idle);
@@ -18,5 +21,7 @@ public class PlayerAnimationData
         JumpParameterHash = Animator.StringToHash(ParameterHash.Jump);
         AttackParameterHash = Animator.StringToHash(ParameterHash.Attack);
         DashParameterHash = Animator.StringToHash(ParameterHash.Dash);
+        IsGroundedParameterHash = Animator.StringToHash("isGrounded");
+        YVelocityParameterHash = Animator.StringToHash("YVelocity");
     }
 }

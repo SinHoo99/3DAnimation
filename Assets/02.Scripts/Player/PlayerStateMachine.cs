@@ -13,6 +13,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerFireState AttackState { get; }
     public PlayerDashState DashState { get; }
 
+    public int JumpCount { get; set; } = 0;
+    public int MaxJumpCount { get; private set; } = 2;
 
     public Rigidbody Rigidbody => Player.Rigidbody;
     public string CurrentStateName => _currentState?.GetType().Name ?? "None"; 

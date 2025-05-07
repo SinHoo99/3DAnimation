@@ -101,8 +101,14 @@ public abstract class PlayerBaseState : IState
 
     protected void StopAnimation(int animatorHash)
     {
-         _stateMachine.Player.Animator.SetBool(animatorHash, false);
+        _stateMachine.Player.Animator.SetBool(animatorHash, false);
     }
+
+    protected void SetTriggerAnimation(int animatorHash)
+    {
+        _stateMachine.Player.Animator.SetTrigger(animatorHash);
+    }
+
 
     protected void ReadMovementInput()
     {

@@ -31,10 +31,10 @@ public class PlayerWalkState : PlayerBaseState
         Vector2 input = _stateMachine.MovementInput;
         float moveSpeed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier;
 
-        //  회전 (A/D)
+        // 회전 (A/D)
         if (Mathf.Abs(input.x) > 0.01f)
         {
-            float turnSpeed = 180f; // deg/sec
+            float turnSpeed = 180f;
             float rotationAmount = input.x * turnSpeed * Time.fixedDeltaTime;
             transform.Rotate(0f, rotationAmount, 0f);
         }
@@ -43,11 +43,12 @@ public class PlayerWalkState : PlayerBaseState
         Vector3 forward = transform.forward;
         Vector3 move = forward * input.y * moveSpeed;
 
-        Vector3 velocity = _stateMachine.Rigidbody.velocity;
-        velocity.x = move.x;
-        velocity.z = move.z;
+        //  기존 yVelocity 보존!
+        float yVelocity = _stateMachine.Rigidbody.velocity.y;
 
-        _stateMachine.Rigidbody.velocity = velocity;
+        Vector3 newVelocity = new Vector3(move.x, yVelocity, move.z);
+        _stateMachine.Rigidbody.velocity = newVelocity;
     }
+
 
 }
