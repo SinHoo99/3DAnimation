@@ -11,6 +11,8 @@ public class PlayerStateMachine : StateMachine
     public PlayerWalkState WalkState { get; }
     public PlayerJumpState JumpState { get; }
     public PlayerFireState AttackState { get; }
+    public PlayerDashState DashState { get; }
+
 
     public Rigidbody Rigidbody => Player.Rigidbody;
     public string CurrentStateName => _currentState?.GetType().Name ?? "None"; 
@@ -23,6 +25,7 @@ public class PlayerStateMachine : StateMachine
         WalkState = new PlayerWalkState(this);
         JumpState = new PlayerJumpState(this);
         AttackState = new PlayerFireState(this);
+        DashState = new PlayerDashState(this);
         MovementSpeed = 10f;
     }
 

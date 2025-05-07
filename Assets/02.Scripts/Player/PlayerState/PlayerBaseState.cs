@@ -43,6 +43,8 @@ public abstract class PlayerBaseState : IState
         input.PlayerInputActions.Player.Move.performed += OnMovementPerformed;
         input.OnFireInput.AddListener(OnAttackPerformed);
         input.OnJumpInput.AddListener(OnJumpButtonPressed);
+        input.OnDashInputStart.AddListener(OnDashButtonPressed);
+        input.OnDashInputEnd.AddListener(OnDashButtonReleased);
     }
 
     protected virtual void RemoveInputActionCallbacks()
@@ -51,6 +53,21 @@ public abstract class PlayerBaseState : IState
         input.PlayerInputActions.Player.Move.canceled -= OnMovementCanceled;
         input.OnFireInput.RemoveListener(OnAttackPerformed);
         input.OnJumpInput.RemoveListener(OnJumpButtonPressed);
+        input.OnDashInputStart.RemoveListener(OnDashButtonPressed);
+        input.OnDashInputEnd.RemoveListener(OnDashButtonReleased);
+    }
+
+    protected void OnDashButtonPressed()
+    {
+        _stateMachine.ChangeState(_stateMachine.DashState);
+    }
+
+    protected virtual void OnDashButtonReleased()
+    {
+        if (_stateMachine.CurrentState is PlayerDashState dashState)
+        {
+            dashState.OnDashRelease();
+        }
     }
 
     protected virtual void OnMovementPerformed(InputAction.CallbackContext context)

@@ -11,10 +11,18 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnJumpInput;
     public UnityEvent OnFireInput;
 
+
+    [Header("Dash")]
+    public UnityEvent OnDashInputStart;
+    public UnityEvent OnDashInputEnd;
+
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _fireAction;
+    private InputAction _dashAction;
     public PlayerInput PlayerInputActions => inputActions;
+
+
 
 
     private void Awake()
@@ -24,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _moveAction = inputActions.Player.Move;
         _jumpAction = inputActions.Player.Jump;
         _fireAction = inputActions.Player.Fire;
+        _dashAction = inputActions.Player.Dash;
 
         _moveAction.performed += context =>
         {
@@ -42,6 +51,15 @@ public class PlayerController : MonoBehaviour
         _fireAction.performed += context =>
         {
             OnFireInput.Invoke();
+        };
+        _dashAction.started += _ =>
+        {
+            OnDashInputStart.Invoke(); 
+        };
+
+        _dashAction.canceled += _ =>
+        {
+            OnDashInputEnd.Invoke(); 
         };
     }
 

@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerController Input { get; private set; }
-    private PlayerStateMachine _stateMachine;
-    
-    
+
+    [field: Header("Animations")]
+    [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
     private Animator _animator;
     public Animator Animator => _animator;
+    [field: Header("PlayerController")]
+    public PlayerController Input { get; private set; }
+  
+    [field: Header("PlayerStateMachine")]
+    private PlayerStateMachine _stateMachine;
+
+    [field: Header("Rigidbody")]
     [SerializeField] private Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody;
     private void Awake()
@@ -16,6 +22,8 @@ public class Player : MonoBehaviour
         Input = GetComponent<PlayerController>();
         _stateMachine = new PlayerStateMachine(this);
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        AnimationData.Initialize();
     }
 
     private void Start()
