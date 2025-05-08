@@ -79,8 +79,9 @@ public abstract class PlayerBaseState : IState
     {
         _stateMachine.MovementInput = context.ReadValue<Vector2>();
 
-        // 점프 중엔 WalkState로 넘어가지 않도록 차단
-        if (_stateMachine.CurrentState is PlayerJumpState) return;
+        // 점프나 대시 중에는 입력으로 상태 변경하지 않음
+        if (_stateMachine.CurrentState is PlayerJumpState || _stateMachine.CurrentState is PlayerDashState)
+            return;
 
         if (_stateMachine.MovementInput.magnitude > 0.1f)
         {

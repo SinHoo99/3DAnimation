@@ -11,10 +11,13 @@ public abstract class StateMachine
 {
     protected IState _currentState;
 
+    public IState PreviousState { get; private set; }
+
     public IState CurrentState => _currentState;
 
     public void ChangeState(IState state)
     {
+        PreviousState = _currentState;
         _currentState?.Exit();
         _currentState = state;
         _currentState?.Enter();

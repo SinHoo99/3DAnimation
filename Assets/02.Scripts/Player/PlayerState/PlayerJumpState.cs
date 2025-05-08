@@ -38,10 +38,18 @@ public class PlayerJumpState : PlayerBaseState
 
         if (_hasJumped && yVelocity <= -0.1f && grounded)
         {
-            if (_stateMachine.MovementInput.sqrMagnitude > 0.01f)
+            if (_stateMachine.PreviousState is PlayerDashState)
+            {
+                _stateMachine.ChangeState(_stateMachine.DashState); //  º¹±Í!
+            }
+            else if (_stateMachine.MovementInput.sqrMagnitude > 0.01f)
+            {
                 _stateMachine.ChangeState(_stateMachine.WalkState);
+            }
             else
+            {
                 _stateMachine.ChangeState(_stateMachine.IdleState);
+            }
         }
     }
 
