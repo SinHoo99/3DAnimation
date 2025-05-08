@@ -142,7 +142,7 @@ public abstract class PlayerBaseState : IState
     {
         Transform transform = _stateMachine.Player.transform;
         Vector2 input = _stateMachine.MovementInput;
-        float moveSpeed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier;
+        float moveSpeed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier / 5;
 
         // 캐릭터의 local 방향 기준으로 이동
         Vector3 moveDir = (transform.right * input.x + transform.forward * input.y).normalized;
