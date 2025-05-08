@@ -29,10 +29,15 @@ public abstract class PlayerBaseState : IState
 
     public virtual void PhysicsUpdate()
     {
-
+        
     }
 
     public virtual void Update()
+    {
+        
+    }
+
+    public virtual void LateUpdate()
     {
         SyncCharacterRotationToCamera();
     }
@@ -58,6 +63,7 @@ public abstract class PlayerBaseState : IState
     }
     protected void OnDashButtonPressed()
     {
+        if (_stateMachine.CurrentState is PlayerJumpState) return;
         _stateMachine.ChangeState(_stateMachine.DashState);
     }
 
@@ -65,7 +71,7 @@ public abstract class PlayerBaseState : IState
     {
         if (_stateMachine.CurrentState is PlayerDashState dashState)
         {
-            dashState.OnDashRelease();
+            dashState.OnDashButton();
         }
     }
 
@@ -137,20 +143,14 @@ public abstract class PlayerBaseState : IState
         Vector2 input = _stateMachine.MovementInput;
         float moveSpeed = _stateMachine.MovementSpeed * _stateMachine.MovementSpeedModifier;
 
-        //  캐릭터 자신의 기준으로 방향 계산
+        // 캐릭터의 local 방향 기준으로 이동
         Vector3 moveDir = (transform.right * input.x + transform.forward * input.y).normalized;
 
         Vector3 horizontalVelocity = moveDir * moveSpeed;
         float yVelocity = _stateMachine.Rigidbody.velocity.y;
         Vector3 finalVelocity = new Vector3(horizontalVelocity.x, yVelocity, horizontalVelocity.z);
-        _stateMachine.Rigidbody.velocity = finalVelocity;
 
-        //  이동 중일 때만 캐릭터 회전
-        if (allowRotation && moveDir.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 10f);
-        }
+        _stateMachine.Rigidbody.velocity = finalVelocity;
     }
 
     protected void SyncCharacterRotationToCamera()

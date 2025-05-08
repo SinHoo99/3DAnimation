@@ -5,6 +5,7 @@ public interface IState
     public void HandleInput();
     public void Update();
     public void PhysicsUpdate();
+    public void LateUpdate();
 }
 public abstract class StateMachine
 {
@@ -29,6 +30,10 @@ public abstract class StateMachine
         _currentState?.Update();
     }
 
+    public void LateUpdate()
+    {
+        _currentState?.LateUpdate();
+    }
     public void PhysicsUpdate()
     {
         _currentState?.PhysicsUpdate();

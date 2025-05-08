@@ -57,5 +57,8 @@ public class PlayerJumpState : PlayerBaseState
         _stateMachine.Player.Animator.SetBool(_stateMachine.Player.AnimationData.WalkParameterHash, false);
     }
 
-
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
 }

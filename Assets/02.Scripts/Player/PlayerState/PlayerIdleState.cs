@@ -33,4 +33,8 @@ public class PlayerIdleState : PlayerBaseState
             _stateMachine.ChangeState(_stateMachine.WalkState);
         }
     }
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
 }

@@ -32,4 +32,8 @@ public class PlayerWalkState : PlayerBaseState
         Move();
     }
 
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
 }

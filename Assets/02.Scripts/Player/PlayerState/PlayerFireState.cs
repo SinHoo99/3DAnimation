@@ -32,4 +32,8 @@ public class PlayerFireState : PlayerBaseState
                 _stateMachine.ChangeState(_stateMachine.IdleState);
         }
     }
+    public override void LateUpdate()
+    {
+        base.LateUpdate();
+    }
 }

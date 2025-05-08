@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -38,10 +39,18 @@ public class Player : MonoBehaviour
 
         Debug.Log($"현재 상태: {_stateMachine.CurrentStateName}");
     }
-
+    private void LateUpdate()
+    {
+        StartCoroutine(DelayedStateMachineLateUpdate());
+    }
     private void FixedUpdate()
     {
         _stateMachine.PhysicsUpdate();
     }
+    private IEnumerator DelayedStateMachineLateUpdate()
+    {
+        yield return new WaitForEndOfFrame(); 
 
+        _stateMachine.LateUpdate(); // 이제 카메라 방향이 최신 상태!
+    }
 }
