@@ -6,6 +6,7 @@ public class PlayerIdleState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
+
         Vector3 velocity = _stateMachine.Rigidbody.velocity;
         velocity.x = 0f;
         velocity.z = 0f;
@@ -18,11 +19,14 @@ public class PlayerIdleState : PlayerBaseState
     public override void Exit()
     {
         base.Exit();
+  
         StopAnimation(_stateMachine.Player.AnimationData.IdleParameterHash);
     }
     public override void Update()
     {
         base.Update();
+
+        if (!IsGrounded()) return;
 
         if (_stateMachine.MovementInput.sqrMagnitude > 0.01f)
         {

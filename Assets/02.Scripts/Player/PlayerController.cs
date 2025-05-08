@@ -22,9 +22,6 @@ public class PlayerController : MonoBehaviour
     private InputAction _dashAction;
     public PlayerInput PlayerInputActions => inputActions;
 
-
-
-
     private void Awake()
     {
         inputActions = new PlayerInput();

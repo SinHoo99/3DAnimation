@@ -11,16 +11,10 @@ public class PlayerDashState : PlayerBaseState
     {
         base.Enter();
 
-        // 이동 입력 방향 저장 (y 제거)
-        Vector3 input = new Vector3(_stateMachine.MovementInput.x, 0f, _stateMachine.MovementInput.y).normalized;
-
-        // 대시 방향이 없으면 현재 바라보는 방향으로
-        _dashDirection = input == Vector3.zero
-            ? _stateMachine.Player.transform.forward
-            : input;
+        _dashDirection = _stateMachine.Player.transform.forward;
 
         Vector3 velocity = _dashDirection * _dashSpeed;
-        velocity.y = _stateMachine.Rigidbody.velocity.y; // 기존 y 유지 (중력)
+        velocity.y = _stateMachine.Rigidbody.velocity.y; // 중력은 유지
         _stateMachine.Rigidbody.velocity = velocity;
     }
 
@@ -31,8 +25,7 @@ public class PlayerDashState : PlayerBaseState
 
     public override void PhysicsUpdate()
     {
-        // 중력은 Rigidbody가 처리하므로 여기서 별도 처리 불필요
-        // 필요하다면 충돌 체크나 추가 제어 가능
+        // 대시 중엔 별도 물리 업데이트 없음 (FixedUpdate에서 속도 유지됨)
     }
 
     public void OnDashRelease()

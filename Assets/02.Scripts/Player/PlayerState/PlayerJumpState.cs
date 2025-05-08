@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerJumpState : PlayerBaseState
 {
     private float _jumpForce = 7f;
+    private bool _hasJumped = false;
 
     public PlayerJumpState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
@@ -14,8 +15,8 @@ public class PlayerJumpState : PlayerBaseState
             return;
 
         _stateMachine.JumpCount++;
+        _hasJumped = true;
 
-        // 조건 만족 후에만 트리거 실행
         SetTriggerAnimation(_stateMachine.Player.AnimationData.JumpParameterHash);
 
         Vector3 velocity = _stateMachine.Rigidbody.velocity;
@@ -23,37 +24,38 @@ public class PlayerJumpState : PlayerBaseState
         _stateMachine.Rigidbody.velocity = velocity;
     }
 
-   
     public override void Update()
     {
         base.Update();
 
         float yVelocity = _stateMachine.Rigidbody.velocity.y;
-
         _stateMachine.Player.Animator.SetFloat(
             _stateMachine.Player.AnimationData.YVelocityParameterHash, yVelocity);
 
         bool grounded = IsGrounded();
-
         _stateMachine.Player.Animator.SetBool(
             _stateMachine.Player.AnimationData.IsGroundedParameterHash, grounded);
 
-        if (yVelocity <= 0f && grounded)
+        if (_hasJumped && yVelocity <= -0.1f && grounded)
         {
-            _stateMachine.ChangeState(_stateMachine.IdleState);
+            if (_stateMachine.MovementInput.sqrMagnitude > 0.01f)
+                _stateMachine.ChangeState(_stateMachine.WalkState);
+            else
+                _stateMachine.ChangeState(_stateMachine.IdleState);
         }
     }
+
+    public override void PhysicsUpdate()
+    {
+        Move();
+    }
+
     public override void Exit()
     {
         base.Exit();
         _stateMachine.Player.Animator.ResetTrigger(_stateMachine.Player.AnimationData.JumpParameterHash);
+        _stateMachine.Player.Animator.SetBool(_stateMachine.Player.AnimationData.WalkParameterHash, false);
     }
-    public bool IsGrounded()
-    {
-        // 발 위치에서 감지하도록 오프셋 조정
-        Vector3 origin = _stateMachine.Player.transform.position + Vector3.down * 0.5f;
-        float radius = 0.2f;
 
-        return Physics.CheckSphere(origin, radius, LayerMask.GetMask("Ground"));
-    }
+
 }
