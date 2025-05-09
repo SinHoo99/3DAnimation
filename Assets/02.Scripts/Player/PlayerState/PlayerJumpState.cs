@@ -36,11 +36,12 @@ public class PlayerJumpState : PlayerBaseState
         _stateMachine.Player.Animator.SetBool(
             _stateMachine.Player.AnimationData.IsGroundedParameterHash, grounded);
 
-        if (_hasJumped && yVelocity <= -0.1f && grounded)
+        if (_hasJumped && grounded && yVelocity <= 0.1f)
         {
+            _stateMachine.JumpCount = 0;
             if (_stateMachine.PreviousState is PlayerDashState)
             {
-                _stateMachine.ChangeState(_stateMachine.DashState); //  복귀!
+                _stateMachine.ChangeState(_stateMachine.DashState);
             }
             else if (_stateMachine.MovementInput.sqrMagnitude > 0.01f)
             {
@@ -55,7 +56,7 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void PhysicsUpdate()
     {
-        Move();
+        MoveBasedOnPreviousState();
     }
 
     public override void Exit()
@@ -69,4 +70,31 @@ public class PlayerJumpState : PlayerBaseState
     {
         base.LateUpdate();
     }
+
+    private void MoveBasedOnPreviousState()
+    {
+        var transform = _stateMachine.Player.transform;
+        var input = _stateMachine.MovementInput;
+        float baseSpeed = _stateMachine.MovementSpeed;
+
+        // 이전 상태에 따라 multiplier 설정
+        float multiplier = 1f;
+
+        if (_stateMachine.PreviousState is PlayerDashState)
+            multiplier = _stateMachine.DashSpeedMultiplier;
+        else if (_stateMachine.PreviousState is PlayerWalkState)
+            multiplier = _stateMachine.MovementSpeedModifier;
+        else if (_stateMachine.PreviousState is PlayerIdleState)
+            multiplier = 0f;
+
+        float finalSpeed = baseSpeed * _stateMachine.MovementSpeedModifier * multiplier;
+
+        Vector3 dir = (transform.right * input.x + transform.forward * input.y).normalized;
+        Vector3 velocity = dir * finalSpeed;
+        velocity.y = _stateMachine.Rigidbody.velocity.y;
+
+        _stateMachine.Rigidbody.velocity = velocity;
+    }
+
+
 }

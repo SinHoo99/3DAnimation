@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _fireAction;
     private InputAction _dashAction;
     public PlayerInput PlayerInputActions => inputActions;
-
+    public bool IsFirePressed => inputActions.Player.Fire.WasPressedThisFrame();
     private void Awake()
     {
         inputActions = new PlayerInput();

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerBaseState
 {
-    private float _dashSpeedMultiplier = 2.5f;
     private float _baseSpeed;
 
     public PlayerDashState(PlayerStateMachine stateMachine) : base(stateMachine) { }
@@ -11,7 +10,7 @@ public class PlayerDashState : PlayerBaseState
     {
         base.Enter();
         _baseSpeed = _stateMachine.MovementSpeed;
-        _stateMachine.MovementSpeed *= _dashSpeedMultiplier;
+        _stateMachine.MovementSpeed *= _stateMachine.DashSpeedMultiplier;
 
         StartAnimation(_stateMachine.Player.AnimationData.DashParameterHash);
     }
@@ -46,4 +45,6 @@ public class PlayerDashState : PlayerBaseState
         else
             _stateMachine.ChangeState(_stateMachine.IdleState);
     }
+
+
 }

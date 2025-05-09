@@ -18,6 +18,14 @@ public class Player : MonoBehaviour
     [field: Header("Rigidbody")]
     [SerializeField] private Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody;
+
+    [field: Header("Weapons")]
+    [SerializeField] private Sword _rightSword;
+    [SerializeField] private Sword _leftSword;
+
+    public Sword RightSword => _rightSword;
+    public Sword LeftSword => _leftSword;
+
     private void Awake()
     {
         Input = GetComponent<PlayerController>();
@@ -30,6 +38,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _stateMachine.ChangeState(_stateMachine.IdleState);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -52,5 +63,42 @@ public class Player : MonoBehaviour
         yield return new WaitForEndOfFrame(); 
 
         _stateMachine.LateUpdate(); // 이제 카메라 방향이 최신 상태!
+    }
+
+    public void ComboCheck()
+    {
+        if (_stateMachine.CurrentState is PlayerFireState fireState)
+        {
+            fireState.OnComboCheckEvent();
+        }
+    }
+
+    public void ComboEnd()
+    {
+        if (_stateMachine.CurrentState is PlayerFireState fireState)
+        {
+            fireState.OnComboEndEvent();
+        }
+    }
+
+    public void EnableRightSwordCollider()
+    {
+        _rightSword.EnableCollider();
+    }
+
+    public void DisableRightSwordCollider()
+    {
+        _rightSword.DisableCollider();
+    }
+
+    // 왼손 소드 콜라이더도 필요 시
+    public void EnableLeftSwordCollider()
+    {
+        _leftSword.EnableCollider();
+    }
+
+    public void DisableLeftSwordCollider()
+    {
+        _leftSword.DisableCollider();
     }
 }

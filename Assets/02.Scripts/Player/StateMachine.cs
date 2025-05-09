@@ -11,7 +11,7 @@ public abstract class StateMachine
 {
     protected IState _currentState;
 
-    public IState PreviousState { get; private set; }
+    public IState PreviousState { get; set; }
 
     public IState CurrentState => _currentState;
 
